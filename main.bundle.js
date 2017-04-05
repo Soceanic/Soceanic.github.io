@@ -171,7 +171,7 @@ module.exports = "<div id=\"main\" class=\"jumbotron\">\n  <!-- <img id=\"profil
 /***/ 154:
 /***/ (function(module, exports) {
 
-module.exports = "<form [formGroup]=\"registrationForm\" (ngSubmit)=\"register()\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  <input type=\"date\" class=\"form-control\" placeholder=\"Birthday MM/DD/YYYY\" formControlName=\"birthday\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Username\" formControlName=\"username\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  <input type=\"password\" class=\"form-control\" placeholder=\"Password\" formControlName=\"password\">\n  <button type=\"submit\" class=\"btn btn-success\">Register</button>\n</form>\n\n<p>Result:</p>\n<p>{{registrationForm.value | json}}</p>\n"
+module.exports = "<form [formGroup]=\"registrationForm\" (ngSubmit)=\"register()\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  <input type=\"date\" class=\"form-control\" placeholder=\"Birthday MM/DD/YYYY\" formControlName=\"birthday\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Username\" formControlName=\"username\">\n  <input type=\"text\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  <input type=\"password\" class=\"form-control\" placeholder=\"Password\" formControlName=\"password\">\n  <button type=\"submit\" class=\"btn btn-success\">Register</button>\n</form>\n\n<p>Result:</p>\n<p>{{registrationForm.value | json}}</p>\n\n<p>Response:</p>\n<p>{{response}}</p>\n"
 
 /***/ }),
 
@@ -534,9 +534,10 @@ var RegistrationComponent = (function () {
         });
     }
     RegistrationComponent.prototype.register = function () {
+        var _this = this;
         var formJson = JSON.stringify(this.registrationForm.getRawValue());
         this.http.post(this.registrationUrl, formJson)
-            .subscribe(function (data) { return console.log('Success!', data); }, function (error) { return console.log('Error!', error); });
+            .subscribe(function (data) { return _this.response = data; }, function (error) { return _this.response = error; });
     };
     return RegistrationComponent;
 }());
